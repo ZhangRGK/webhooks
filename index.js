@@ -26,7 +26,7 @@ handler.on('pull_request', ({ payload }) => {
 
   if (
     action === 'closed'
-    && branch.test(/^dev|feature\/[\d+\.*]+$/i)
+    && /^dev|feature\/[\d+\.*]+$/i.test(branch)
     && merged
   ) {
     console.log('run bulid scripts');
