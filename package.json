@@ -1,0 +1,11 @@
+{
+  "name": "xstar-webhooks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "github-webhook-handler": "^0.7.0",
+    "shelljs": "^0.7.8"
+  }
+}
