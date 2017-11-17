@@ -20,11 +20,12 @@ handler.on('push', ({ ref }) => {
 handler.on('pull_request', ({ payload }) => {
   const branch = payload.pull_request.base.ref;
   const action = payload.action;
-  const merged = payload.pull_request.base.merged;
+  const merged = payload.pull_request.merged;
 
   console.log(branch, action, merged);
 
-  if (action === 'closed'
+  if (
+    action === 'closed'
     && branch.test(/^dev|feature\/[\d+\.*]+$/i)
     && merged
   ) {
