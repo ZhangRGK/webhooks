@@ -17,14 +17,18 @@ handler.on('push', ({ ref }) => {
   console.log('push ref: ', ref);
 });
 
-handler.on('pull_request', ({ action, pull_request }) => {
-  const branch = pull_request.base.ref;
-  console.log(action, branch);
+handler.on('pull_request', ({ payload }) => {
+  const branch = payload.pull_request.base.ref;
+  const action = payload.action;
+  const merged = payload.pull_request.base.merged;
+
+  console.log(branch, action, merged);
 
   if (action === 'closed'
     && branch.test(/^dev|feature\/[\d+\.*]+$/i)
-    && pull_request.base.merged
+    && merged
   ) {
+    console.log('run bulid scripts');
     // TODO run build scripts
   }
 });
