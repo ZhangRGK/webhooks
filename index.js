@@ -1,5 +1,6 @@
 const http = require('http');
 const createHandler = require('github-webhook-handler');
+const shell = require('shelljs');
 const config = require('./config');
 const handler = createHandler(config);
 
@@ -12,9 +13,9 @@ http.createServer((req, res) => {
 
 handler.once('error', console.log);
 
-handler.on('push', ({ ref }) => {
+handler.on('push', ({ payload }) => {
   // TODO run test
-  console.log('push ref: ', ref);
+  console.log('push ref: ', payload.ref);
 });
 
 handler.on('pull_request', ({ payload }) => {
@@ -30,11 +31,11 @@ handler.on('pull_request', ({ payload }) => {
     && merged
   ) {
     console.log('run bulid scripts');
-    // TODO run build scripts
+    shell.exec('sh ./scripts/management-build.sh');
   }
 });
 
-handler.once('release', ({ action, release }) => {
+handler.on('release', ({ payload }) => {
   // TODO build
-  console.log('release:', action, release);
+  console.log('release:', payload.action, payload.release);
 });
